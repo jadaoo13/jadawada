@@ -1,0 +1,338 @@
+
+<!doctype html>
+<!--
+    Name: Jada Oloruntimilehin
+    File: index.html
+    Date Created: 06/09/2024
+    Date Updated: 07/03/2024
+    Version: 0.1
+    Purpose: Homework 4 - Implement pattern matching matching that validates user information, and a table that redisplays users input.
+-->
+
+<html>
+  <head>
+   <!--allow use of special characters-->
+    <meta charset="UTF-8">
+    <!--properly scale form to device-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jada's Homework 4</title>
+    <!-- importing external CSS file -->
+    <link rel="stylesheet" type="text/css" href="hw4g.css">
+    <script src="hw4g.js" defer></script>
+    <script src="hw3g.js" defer></script>
+  </head>
+  <body>
+    <!--making header fixed as user scrolls-->
+    <header class= "fixedheader">
+      <!--importing image file-->
+      <img src="/Wellspring_Medical.png" alt="Logo of Wellspring Medical" class="headerlogo">
+      <!--display date using javascript-->
+      <div id = "datecontainer">
+        <label for ='dateField'>Today's Date:</label>
+        <span id="dateField"></span>
+      </div>
+      <div id="formtitle">
+        <h1><Strong>Wellspring Medical</strong></h1>
+      </div>
+    </header>
+
+    <form id="patientform" onsubmit="return validateForm()" action="hw4thankyou.html">
+      <!-- creating class called "container" to make styling easier -->
+      <div class="container">
+        <!-- heading -->
+        <h1>Patient Medical Form</h1>
+
+        <!-- patient information -->
+        <!-- using table for spacing -->
+        <!--greeting-->
+      <div id="greetingMessage">
+      </div>
+      <label for="newUserCheckbox">
+        Click here to start as a New User.
+        <input type="checkbox" id="newUserCheckbox" onchange="handleNewUserCheckbox()">
+        </label>
+        <table>
+          <tr>
+            <td colspan="3">
+              <fieldset>
+                <legend><strong>Personal Information</strong></legend>
+                <table>
+                  <tr>
+                    <!-- fullname -->
+                    <td><label for="firstname">First Name<span style="color:red;">*</span></label></td>
+                    <td>
+                    <input type="text" id="firstname" pattern="[A-Z^a-z-' ^~]{2,}" oninvalid="setCustomValidityMessage(this,'Name not valid.')"oninput="handleInput(event)"onblur="validateInput(this)"title="First Name not valid(letters, apostrophes and dashes only)"name="firstname" maxlength="30" placeholder="Jane" required><span class="errormessage"></span> <span class="field-error" id="firstname-error"></span></td>
+                    
+                    <td><label for="middleinit">M.I</label></td>
+                    <td><input type="text" id="middleinit" pattern="^[A-Za-z]?$" oninvalid="setCustomValidityMessage(this,'Name not valid.')"oninput="handleInput(event)"onblur="validateInput(this)"title="M.I not valid(letters only)"name="middleinit" size="1" maxlength="1" placeholder="B"><span class="errormessage"id="middleinit-error"></span></td>
+                    <div id="validation-messages"></div><br>
+                    <td><label for="lastname">Last Name<span style="color:red;">*</span></label></td>
+                    <td><input type="text" id="lastname" pattern="[A-Z^a-z-' ^~]{2,}" oninvalid="setCustomValidityMessage(this,'Name not valid.')"oninput="handleInput(event)"onblur="validateInput(this)"title="Last Name not valid(letters, apostrophes and dashes only)"name="lastname" maxlength="30" placeholder="Doe" required><span class="errormessage"</span><span class="field-error"id="lastname-error"></span></td>
+                    <div id="validation-messages"></div><br>
+                  </tr>
+                  <tr>
+                    <!-- birthday and social -->
+                    <td><label for="birthdate">Date of Birth<span style="color:red;">*</span></label></td>
+                    <td><input type="date" id="birthdate" name="birthdate"onblur="validateDateOfBirth(this)"required><span class="errormessage"></span>
+                    <span class="field-error" id="birthdate-error"></span></td>
+                  
+                    <td><label for="social">Social Security #<span style="color:red;">*</span></label></td>
+                    <td><input type="password" id="social" name="social" size="9" maxlength="11"placeholder="000-00-0000" required><span class="field-error" id="social-error"></span></td>
+                  </tr>
+                  <tr>
+                    <!-- address -->
+                    <td><label for="address">Address line 1<span style="color:red;">*</span></label></td>
+                    <td><input type="text" id="address" name="address" maxlength="30" placeholder="308 Negra Arroyo Lane" oninput="handleInput(event)"oninvalid="setCustomValidityMessage(this,'Address required')"onblur="validateInput(this)"title="Address entry required"required><span class="errormessage"></span><span class="field-error" id="address-error"></span></td>
+                    <td><label for="address2">Address line 2</label></td>
+                    <td><input type="text" id="address2" name="address2" maxlength="30" placeholder="Apt #, etc..."><span class="field-error" id="address2-error"></span></td>
+                  </tr>
+                  <tr>
+                    <td><label for="city">City<span style="color:red;">*</span></label></td>
+                    <td><input type="text" id="city" name="city" maxlength="30" placeholder="Albuquerque" pattern="^[A-Za-z]+$" oninvalid="setCustomValidityMessage(this,'City not valid.')"oninput="handleInput(event)"onblur="validateInput(this)"title="City not valid(letters only)" required><span class="errormessage"></span><span class="field-error" id="city-error"></span></td>
+                    <!-- making select box for states -->
+                    <td><label for="state">State<span style="color:red;">*</span></label></td>
+                    <td>
+                      <select id="state" name="state"required>
+                        <option value="">Select</option>
+                        <option value="AL">Alabama</option>
+                        <option value="AK">Alaska</option>
+                        <option value="AZ">Arizona</option>
+                        <option value="AR">Arkansas</option>
+                        <option value="CA">California</option>
+                        <option value="CO">Colorado</option>
+                        <option value="CT">Connecticut</option>
+                        <option value="DE">Delaware</option>
+                        <option value="DC">District Of Columbia</option>
+                        <option value="FL">Florida</option>
+                        <option value="GA">Georgia</option>
+                        <option value="HI">Hawaii</option>
+                        <option value="ID">Idaho</option>
+                        <option value="IL">Illinois</option>
+                        <option value="IN">Indiana</option>
+                        <option value="IA">Iowa</option>
+                        <option value="KS">Kansas</option>
+                        <option value="KY">Kentucky</option>
+                        <option value="LA">Louisiana</option>
+                        <option value="ME">Maine</option>
+                        <option value="MD">Maryland</option>
+                        <option value="MA">Massachusetts</option>
+                        <option value="MI">Michigan</option>
+                        <option value="MN">Minnesota</option>
+                        <option value="MS">Mississippi</option>
+                        <option value="MO">Missouri</option>
+                        <option value="MT">Montana</option>
+                        <option value="NE">Nebraska</option>
+                        <option value="NV">Nevada</option>
+                        <option value="NH">New Hampshire</option>
+                        <option value="NJ">New Jersey</option>
+                        <option value="NM">New Mexico</option>
+                        <option value="NY">New York</option>
+                        <option value="NC">North Carolina</option>
+                        <option value="ND">North Dakota</option>
+                        <option value="OH">Ohio</option>
+                        <option value="OK">Oklahoma</option>
+                        <option value="OR">Oregon</option>
+                        <option value="PA">Pennsylvania</option>
+                        <option value="RI">Rhode Island</option>
+                        <option value="SC">South Carolina</option>
+                        <option value="SD">South Dakota</option>
+                        <option value="TN">Tennessee</option>
+                        <option value="TX">Texas</option>
+                        <option value="UT">Utah</option>
+                        <option value="VT">Vermont</option>
+                        <option value="VA">Virginia</option>
+                        <option value="WA">Washington</option>
+                        <option value="WV">West Virginia</option>
+                        <option value="WI">Wisconsin</option>
+                        <option value="WY">Wyoming</option>
+                      </select><span class="field-error" id="state-error"></span>
+                    </td>
+                    <td><label for="zip">Zip<span style="color:red;">*</span></label></td>
+                    <td><input type="text" id="zip" name="zip" maxlength="10" placeholder="89234" pattern="\d{5}(-\d{4})?"oninvalid="setCustomValidityMessage(this, 'Zip Code not valid. Use 5 digits or 5 digits followed by - and 4 digits.')" oninput="handleInput(event)" onblur="validateInput(this)" title="Zip Code not valid (use 5 digits or 5 digits followed by - and 4 digits)"  required><span class="errormessage"></span><span class="field-error" id="zip-error"></span></td>
+                  </tr>
+                  <tr>
+                    <!-- phone number and email -->
+                    <td><label for="phone">Mobile Phone Number<span style="color:red;">*</span></label></td>
+                    <td><input type="tel" id="phone" name="phone" placeholder="(123)456-7891" pattern="(\(\d{3}\) ?|\d{3}-?)?\d{3}-?\d{4}"oninvalid="setCustomValidityMessage(this, 'Phone Number not valid. Use format (123)456-7891.')" oninput="handleInput(event)" onblur="formatPhoneNumber(this);validateInput(this)" title="Phone Number not valid (use format (123)456-7891)"required><span class="errormessage"></span><span class="field-error" id="phone-error"></span></td>
+                    <td><label for="email">Email Address<span style="color:red;">*</span></label></td>
+                    <td><input type="email" id="email" name="email" size="25" placeholder="formattedname@domain.tld"pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,20}$"oninvalid="setCustomValidityMessage(this,'Email not valid.')"oninput="handleInput(event)"onblur="validateInput(this)"title="Email not valid(format name@domain.tld)"required><span class="errormessage"></span><span class="field-error" id="email-error"></span></td>
+                  </tr>
+                </table>
+              </fieldset>
+            </td>
+          </tr>
+        </table>
+        <label for="rememberMeCheckbox">
+        Remember Me
+        <input type="checkbox" id="rememberMeCheckbox">
+    </label>
+        <table>
+          <tr>
+            <!--text area-->
+            <td><label for="symps">Please describe your current symptoms</label></td>
+            <td><textarea id="symps" name="symps" rows="3" cols="50" ></textarea></td>
+            <td>
+            <!--slider class will be used in javascript to display values-->
+              <div class="sliderclass">
+                <label for ="slider">How healthy do you consider yourself on a scale of 1 to 10?</label>
+                <input type="range" id="slider" name="slider" min="1" max="10" value="5"class="slider">
+                <p> value:<span id="slidervalue"></span></p>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              <fieldset>
+                <legend><strong>Check all that apply:</strong></legend>
+                <label><input type="checkbox" name="condition" value="chickenpox"> Chicken Pox</label><br>
+                <label><input type="checkbox" name="condition" value="measles"> Measles</label><br>
+                <label><input type="checkbox" name="condition" value="covid19"> COVID-19</label><br>
+                <label><input type="checkbox" name="condition" value="smallpox"> Small Pox</label><br>
+                <label><input type="checkbox" name="condition" value="tetanus"> Tetanus</label><br>
+                <label><input type="checkbox" name="condition" value="flu"> Influenza</label><br>
+              </fieldset>
+            </td>
+          <!--maaking this into a class so that i can properly format it in css-->
+          <td class="floatright">
+            <fieldset>
+            <legend><p><strong>Gender:</strong></legend><br>
+            <label><input type="radio" name="gender" value="male"> Male</label><br>
+            <label><input type="radio" name="gender" value="female"> Female</label><br>
+            <label><input type="radio" name="gender" value="other"> Other</label><br>
+            <label><input type="radio" name="gender" value="pnosay"> Prefer not to say</label><br>
+            </fieldset>
+          </td>
+        <td>
+          <fieldset>
+            <!--radio buttons to find how often patient goes to doctor-->
+            <legend><strong>How often do you get a health checkup?</strong></legend>
+            <label><input type="radio" name="checkup" value="three"> Once in 3 months</label><br>
+            <label><input type="radio" name="checkup" value="sixm"> Once in 6 months</label><br>
+            <label><input type="radio" name="checkup" value="oncey"> Once a year</label><br>
+            <label><input type="radio" name="checkup" value="never"> Never get it done</label><br>
+            <label><input type="radio" name="checkup" value="other"> Other</label><br>
+          </fieldset>
+        </td>
+          <td >
+            <fieldset>
+              <legend><strong>Have you been vaccinated?</strong></legend>
+              <label><input type="radio" name="vaccinated" value="yes"> Yes</label><br>
+              <label><input type="radio" name="vaccinated" value="no"> No</label><br>
+            </fieldset>
+          </td>
+        </tr>
+        </table>
+        <fieldset>
+          <!--insurance information-->
+          <legend><strong>Insurance Information</strong></legend>
+          <table>
+            <tr>
+              <td><label for="insuranceholder">Primary insurance holder's first name:<span style="color:red;">*</span></label></td>
+              <td><input type="text" id="insuranceholder" name="insuranceholder" maxlength="30" pattern="[A-Z^a-z-' ^~]{2,}"placeholder="Jane"oninvalid="setCustomValidityMessage(this,'Name not valid.')"oninput="handleInput(event)"onblur="validateInput(this)"title="First Name not valid(letters, apostrophes and dashes only)" required><span class="errormessage"></span><span class="field-error" id="insuranceholder-error"></span></td>
+              <td><label for="insurance_middleinit">M.I</label></td>
+              <td><input type="text" id="insurance_middleinit" name="insurance_middleinit" size="1" maxlength="1" placeholder="B"><span class="field-error" id="insurance_middleinit-error"></span></td>
+              <td><label for="insurance_lastname">Last Name<span style="color:red;">*</span></label></td>
+              <td><input type="text" id="insurance_lastname" name="insurance_lastname" maxlength="30" placeholder="Doe"pattern="[A-Z^a-z-' ^~]{2,}"oninvalid="setCustomValidityMessage(this,'Name not valid.')"oninput="handleInput(event)"onblur="validateInput(this)"title="Last Name not valid(letters, apostrophes and dashes only)" required><span class="errormessage"></span><span class="field-error" id="insurance_lastname-error"></span></td>
+            </tr>
+            <tr>
+              <td><label for="insurancecompany">Insurance Company:</label></td>
+              <td><input type="text" id="insurancecompany" name="insurancecompany"></td>
+              <td><label for="policynumber">Policy number:</label></td>
+              <td><input type="text" id="policynumber" name="policynumber" ></td>
+
+              <td><label for="relation"> Relation to patient<span style="color:red;">*</span></label></td>
+                <td>
+                  <!--select box for relationship to patient-->
+              <select name="relationship" id="relation" required>
+                <option value="">Select</option>
+                <option value="me">Myself</option>
+                <option value="mother">Mother</option>
+                <option value="father">Father</option>
+                <option value="sibling">Sibling</option>
+                <option value="gaurdian">Legal gaurdian</option>
+                <option value="spouse">Spouse</option>
+                </td><span class="field-error" id="relationship-error"></span>
+            </tr>
+            <tr>
+              <td><label for="insurance_birthdate">Birthdate:<span style="color:red;">*</span></label></td>
+              <td><input type="date" id="insurance_birthdate" name="insurance_birthdate"onblur="validateDateOfBirth(this)"required><span class="errormessage"></span><span class="field-error" id="insurance_birthdate-error"></span></td>
+              <td><label for="insurance_social">Social Security #</label></td>
+              <td><input type="password" id="insurance_social" name="insurance_social"placeholder="000-00-000"maxlength="11"><span class="field-error" id="insurance_social-error"></span></td>
+            </tr>
+            <tr>
+              <td><label for="employer">Employer:</label></td>
+              <td><input type="text" id="employer" name="employer"></td>
+              <td><label for="occupation">Occupation:</label></td>
+              <td><input type="text" id="occupation" name="occupation"></td>
+            </tr>
+          </table>
+        </fieldset>
+
+        <fieldset>
+          <legend><strong>Create User ID/Password</strong></legend>
+          <table>
+            <tr>
+              <!--username and password requirements-->
+              <td><label for="userid">User ID:<span style="color:red;">*</span></label></td>
+              <td><input type="text" id="userid" name="userid" maxlength="20" pattern="[a-zA-Z_\-][a-zA-Z0-9_\-]{4,29}"  oninput="handleInput(event)" oninvalid="setCustomValidityMessage(this, 'User ID not valid.')" onblur="validateUserID(this)" title="User ID must be 5 to 30 characters, no spaces, and only letters, numbers, underscore, or dash." required><span class="errormessage"></span><span class="field-error" id="userid-error"></span></td>
+            </tr>
+            <tr>
+              <td><label for="password">Password:<span style="color:red;">*</span></label></td>
+              <td>
+                <div class="passreq">
+                  <input type="password" id="password" name="password" required oninput="checkPasswordComplexity(this.value)"><span class="field-error" id="password-error"></span>
+                  <span class="passreq">
+                    <ul>
+                      <li id="length" class="invalid">Password must be at least 8 characters long and contain:</li>
+                      <li id="uppercase" class="invalid">At least one uppercase letter</li>
+                      <li id="lowercase" class="invalid">At least one lowercase letter</li>
+                      <li id="number" class="invalid">At least one number</li>
+                      <li id="special" class="invalid">At least one special character</li>
+                    </ul>
+                  </span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="passwordre">Re-enter Password:<span style="color:red;">*</span></label></td>
+              <td><input type="password" id="passwordre" name="passwordre"oninput="handleInput(event)" oninvalid="setCustomValidityMessage(this, 'Passwords do not match.')" onblur="validatepasswordre(this)" title="Passwords do not match."required><span class="errormessage"><span class="field-error" id="passwordre-error"></span></td>
+            </tr>
+          </table>
+        </fieldset>
+
+        <!-- submit button and reset button -->
+        <table>
+          <tr>
+            <div class="container">
+            <button type="button" class="validateBtn" id="validateBtn">Validate</button>
+             <button class="submitbtn"id ="submitbtn"><strong>Submit</strong></button>
+            </div>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <button type="reset"><strong>Clear Form</strong></button>
+            <!--hw 2. adding button that will redisplay users input-->
+              <button type="button" id="check" onclick="getdata()""><strong>Get Data</strong></button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </form>
+    <p id= "outputformdata"></p>
+    <!--iframes-->
+  <div class="iframecontent">
+    <iframe src="https://www.webmd.com" frameborder="0" scrolling="auto" alt="webMD website"title="WebMD"></iframe>
+    </div>
+    <!--footer class-->
+    <footer>
+      <div class="footercontent">
+        <div class="footer">
+      <img src="/Wellspring_Medical.png" alt="Logo of Wellspring Medical" class="footerlogo">
+      </div>
+        <p>Wellspring Medical</p>
+        <button type="button" id="contact" onclick="contactInfo()">CONTACT US</button>
+      </div>
+    </footer>
+  </body>
+  <!--end of file-->
+</html>
